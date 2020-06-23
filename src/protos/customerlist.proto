@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Customer {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+  bool is_new_customer = 4;
+}
+
+message CustomerList {
+  repeated Customer customer = 1;
+}

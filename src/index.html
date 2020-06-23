@@ -1,0 +1,63 @@
+<!doctype HTML>
+<html>
+    <title>Customer List</title>
+    <script>
+        const getCustomers = () => fetch('/customers').then(e => e.json()).then(({ customerList }) => {
+            const customerListEl = document.getElementById('customer-list');
+
+            const tableData = customerList.map(({ id, name, email, isNewCustomer }) =>
+                `
+                    <tr><td>${id}</td><td>${name}</td><td>${email}</td><td>${isNewCustomer}</td></tr>
+                `
+            ).join('');
+
+            console.log(tableData)
+
+            customerListEl.innerHTML = tableData
+        })
+
+        window.onload = () => {
+            document.getElementById('get-customer').addEventListener('click', getCustomers);
+        }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .customer-table {
+            border-radius: 3px;
+            width: 400px;
+            border: 1px solid;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        tr, td {
+            border: 1px solid;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        .loading {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+    <body>
+        <h1>Internal customer display tool</h1>
+        <table class="customer-table">
+            <thead><tr><td>Id</td><td>Name</td><td>email</td><td>Is new customer?</td></tr></thead>
+            <tbody id="customer-list"><tr><td class="loading"  rowspan="4" colspan="4">No customers yet</td></tr></tbody>
+        </table>
+        <button id="get-customer">Get customer list</button>
+    </body>
+</html>
